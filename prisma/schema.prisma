@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+enum GameStatus {
+  PLAYING
+  COMPLETED
+  PLATINUM
+  DROPPED
+  BACKLOG
+}
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+
+  title String 
+  genre String
+  platform String
+
+  score Int?
+  review String?
+
+  status GameStatus @default(BACKLOG)
+
+  coverUrl String?
+
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
